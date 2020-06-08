@@ -5,20 +5,20 @@
     <form #questionnaireForm="ngForm">
         <div class="form-group">
             <label for="companyName">Company Name</label>
-            <input type="text" size="30" maxlength="30" class="form-control" id="companyName" [(ngModel)]="model.companyName" required>
+            <input type="text" size="30" maxlength="30" class="form-control" id="companyName" name="companyName" [(ngModel)]="model.companyName" required>
             TODO: remove this: {{model.companyName}}
         </div>
         <div class="form-group">
             <label for="interviewDate">Interview Date </label>
-            <input type="text" size="15" maxlength="15" class="form-control" id="interviewDate" required>
+            <input type="text" size="15" maxlength="15" class="form-control" id="interviewDate" name="interviewDate" required>
         </div>
         <div class="form-group">
             <label for="isDefault">is Default?</label>
-            <input type="checkbox" class="form-control" id="isDefault" required>
+            <input type="checkbox" class="form-control" id="isDefault" name="isDefault" required>
         </div>
         <div class="form-group">
             <label for="position">Position</label>
-            <input type="text" size="15" maxlength="15" class="form-control" id="position">
+            <input type="text" size="15" maxlength="15" class="form-control" id="position" name="position">
         </div>
 
         <button type="submit" class="btn btn-success">Submit</button>
