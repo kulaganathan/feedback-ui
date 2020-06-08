@@ -1,0 +1,25 @@
+{
+    "companyName": "master card",
+    "interviewDate": "2020-01-01",
+    "isDefault": true,
+    "position": "software engineer",
+    "questions": [
+      {
+        "description": "positives:",
+        "options": [
+          "string"
+        ],
+        "type": "TEXT"
+      },
+      {
+        "description": "How did I do?",
+        "options": [
+          "OK",
+          "Great"
+        ],
+        "type": "DROP_DOWN"
+      }
+    ],
+    "responseLimit": 10,
+    "templateName": "1"
+  }
