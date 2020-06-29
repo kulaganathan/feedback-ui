@@ -1,37 +1,76 @@
 {{diagnostic}}
 
 <div id="questionnaire-form" class="container">
+
     <div class="row">
-    <div class="col-md-12"><h3>Design your feedback form here!</h3></div>
+        <div class="col-md-12">
+            <h3>Design your dynamic feedback form here!</h3>
+        </div>
     </div>
     <div class="row">
-    <form #questionnaireForm="ngForm">
-        <div class="form-row">
-            <div class="form-group col-md-6">
-                <label for="companyName">Company Name</label>
-                <input type="text" size="30" maxlength="30" class="form-control" id="companyName" name="companyName"
-                    [(ngModel)]="model.companyName" required>
+        <form [formGroup]="questionnaireForm" (ngSubmit)="onSubmit()">
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="companyName">Company Name
+                        <input type="text" size="30" maxlength="30" class="form-control" id="companyName"
+                            name="companyName" formControlName="companyName" required>
+                    </label>
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="interviewDate">Interview Date </label>
+                    <input type="date" size="15" maxlength="15" class="form-control input-group-date" id="interviewDate"
+                        name="interviewDate" formControlName="interviewDate" required>
+                </div>
             </div>
-            <div class="form-group col-md-3">
-                <label for="interviewDate">Interview Date </label>
-                <input type="date" size="15" maxlength="15" class="form-control input-group-date" id="interviewDate" name="interviewDate"
-                    required>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="position">Position
+                        <input type="text" size="30" maxlength="30" class="form-control" id="position" name="position"
+                            formControlName="position" required>
+                    </label>
+                </div>
+                <div class="form-group col-md-2">
+                    <label for="isDefault">is Default?</label>
+                    <input type="checkbox" class="form-control" id="isDefault" formControlName="isDefault"
+                        name="isDefault" checked required>
+                </div>
             </div>
-        </div>
-        <div class="form-row">
-            <div class="form-group col-md-6">
-                <label for="position">Position</label>
-                <input type="text" size="15" maxlength="15" class="form-control" id="position" name="position">
+            <div class="form-row" formGroupName="questions">
+                <div class="form-group col-md-6">
+                    <label for="question">Question</label>
+                    <textarea class="form-control" formControlName="question"></textarea>
+                </div>
+                <div class="form-group col-md-2">
+                    <label for="questionType">Type</label>
+                    <select class="form-control">
+                        <option value="textBox">Text Box</option>
+                        <option value="textArea">Text Area</option>
+                        <option value="dropDown">Drop Down</option>
+                        <option value="radioButton">Radio Button</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-2">
+                    <label for="questionOptions">Options</label>
+                    <select class="form-control">
+                        <option>Text Box</option>
+                        <option>Text Area</option>
+                        <option>Drop Down</option>
+                        <option>Radio Button</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-3">
+                    <br />
+                    <button type="button" class="btn btn-success">Add</button>
+                </div>
             </div>
-            <div class="form-group col-md-2">
-                <label for="isDefault">is Default?</label>
-                <input type="checkbox" class="form-control" id="isDefault" name="isDefault" checked required>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label>{{this.questionnaireForm.value}}</label>
+                </div>
+                <div class="form-group col-md-3">
+                    <button type="submit" [disabled]="!questionnaireForm.valid" class="btn btn-success">Submit</button>
+                </div>
             </div>
-            <div class="form-group col-md-2">
-                <div><br/></div>
-                <button type="submit" class="btn btn-success">Create</button>
-            </div>
-        </div>
-    </form>
+        </form>
     </div>
 </div>
