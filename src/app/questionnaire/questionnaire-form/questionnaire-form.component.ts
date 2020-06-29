@@ -10,10 +10,9 @@ import { Questionnaire } from '../questionnaire';
 })
 export class QuestionnaireFormComponent {
 
-  model = new Questionnaire('Enter company name here.', 'Enter interview date here', false, 'Enter interview position here');
-  submitted = false;
-
   constructor(private fb: FormBuilder) { }
+
+  questionTypes: any=['Text Box', 'Text Area', 'Drop Down', 'Radio Button']
 
   get diagnostic() { return JSON.stringify(this.questionnaireForm.value); }
 
@@ -28,7 +27,21 @@ export class QuestionnaireFormComponent {
     isDefault: [true],
     questions: this.fb.group({
       question: ['Enter your question here'],
+      questionType: [''],
+      options: this.fb.array([
+        this.fb.control('')
+      ])
     })
   });
+
+  get options() {
+    return this.questionnaireForm.get('questions').get('options') as FormArray;
+  }
+
+
+  addOption(){
+    alert('add option clicked!');
+    this.options.push(this.fb.control(''));
+  }
 
 }
