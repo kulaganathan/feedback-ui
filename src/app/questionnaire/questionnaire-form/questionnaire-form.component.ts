@@ -56,4 +56,16 @@ export class QuestionnaireFormComponent {
     this.getOptions(i).push(this.fb.control(''));
   }
 
+  addQuestion() {
+    this.questions.push(
+      this.fb.group({
+      question: ['Enter your question here'],
+      questionType: [''],
+      options: this.fb.array([
+        this.fb.control('')
+      ])
+    })
+    );
+  }
+
 }
