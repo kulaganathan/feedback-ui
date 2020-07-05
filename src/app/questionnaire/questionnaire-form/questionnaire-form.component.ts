@@ -12,7 +12,7 @@ export class QuestionnaireFormComponent {
 
   constructor(private fb: FormBuilder) { }
 
-  questionTypes: any=['Text Box', 'Text Area', 'Drop Down', 'Radio Button']
+  questionTypes: any = ['Text Box', 'Text Area', 'Drop Down', 'Radio Button']
 
   get diagnostic() { return JSON.stringify(this.questionnaireForm.value); }
 
@@ -25,34 +25,35 @@ export class QuestionnaireFormComponent {
     interviewDate: [''],
     position: ['Enter the position you applied for.'],
     isDefault: [true],
-    questions: this.fb.group({
-      question: ['Enter your question here'],
-      questionType: [''],
-      options: this.fb.array([
-        this.fb.control('')
-      ])
-    })
+    questions: this.fb.array([
+      this.fb.group({
+        question: ['Enter your question here'],
+        questionType: [''],
+        options: this.fb.array([
+          this.fb.control('')
+        ])
+      })
+    ])
   });
 
-  get options() {
-    return this.questionnaireForm.get('questions').get('options') as FormArray;
+  get questions() {
+    console.log("Questions: ", this.questionnaireForm.get('questions'));
+    return this.questionnaireForm.get('questions') as FormArray;
   }
 
-  get questionType(){
-    return this.questionnaireForm.get('questions').get('questionType').value;
+  getOptions(i: number) {
+    let fa: FormArray = this.questionnaireForm.get('questions') as FormArray;
+    return fa.at(i).get('options') as FormArray;
   }
 
-  displayValue() {
-    let fa=this.questionnaireForm.get("questions").get("questionType") as FormControl;
-    console.log("Questionnaire Form group:" + JSON.stringify(fa.value));
-    return this.questionnaireForm.get("questions").get("options") as FormArray;
+  getQuestionType(i: number) {
+    let fa: FormArray = this.questionnaireForm.get('questions') as FormArray;
+    return fa.at(i).get('questionType').value;
   }
 
-  display = this.displayValue();
-
-  addOption(){
-    alert('add option clicked!');
-    this.options.push(this.fb.control('kalai'));
+  addOption(i: number) {
+    console.log("i now: " + i);
+    this.getOptions(i).push(this.fb.control(''));
   }
 
 }
