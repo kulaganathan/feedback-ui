@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormArray, FormControl, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormArray, FormControl, Validators, FormControlName } from '@angular/forms';
 
 import { Questionnaire } from '../questionnaire';
 
@@ -38,10 +38,21 @@ export class QuestionnaireFormComponent {
     return this.questionnaireForm.get('questions').get('options') as FormArray;
   }
 
+  get questionType(){
+    return this.questionnaireForm.get('questions').get('questionType').value;
+  }
+
+  displayValue() {
+    let fa=this.questionnaireForm.get("questions").get("questionType") as FormControl;
+    console.log("Questionnaire Form group:" + JSON.stringify(fa.value));
+    return this.questionnaireForm.get("questions").get("options") as FormArray;
+  }
+
+  display = this.displayValue();
 
   addOption(){
     alert('add option clicked!');
-    this.options.push(this.fb.control(''));
+    this.options.push(this.fb.control('kalai'));
   }
 
 }
