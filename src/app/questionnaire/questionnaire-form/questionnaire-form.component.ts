@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, FormArray, FormControl, Validators, FormControlName } from '@angular/forms';
+
 import { Questionnaire } from '../questionnaire';
 
 @Component({
@@ -8,14 +10,62 @@ import { Questionnaire } from '../questionnaire';
 })
 export class QuestionnaireFormComponent {
 
-  model = new Questionnaire('Enter company name here.', 'Enter interview date here', false, 'Enter interview position here');
-  submitted = false;
+  constructor(private fb: FormBuilder) { }
+
+  questionTypes: any = ['Text Box', 'Text Area', 'Drop Down', 'Radio Button']
+
+  get diagnostic() { return JSON.stringify(this.questionnaireForm.value); }
 
   onSubmit() {
-    this.submitted = true;
+    alert("Form submitted.");
   }
 
-  get diagnostic() { return JSON.stringify(this.model); }
+  questionnaireForm = this.fb.group({
+    companyName: ['Enter company name here!', Validators.required],
+    interviewDate: [''],
+    position: ['Enter the position you applied for.'],
+    isDefault: [true],
+    questions: this.fb.array([
+      this.fb.group({
+        question: ['Enter your question here'],
+        questionType: [''],
+        options: this.fb.array([
+          this.fb.control('')
+        ])
+      })
+    ])
+  });
 
+  get questions() {
+    console.log("Questions: ", this.questionnaireForm.get('questions'));
+    return this.questionnaireForm.get('questions') as FormArray;
+  }
+
+  getOptions(i: number) {
+    let fa: FormArray = this.questionnaireForm.get('questions') as FormArray;
+    return fa.at(i).get('options') as FormArray;
+  }
+
+  getQuestionType(i: number) {
+    let fa: FormArray = this.questionnaireForm.get('questions') as FormArray;
+    return fa.at(i).get('questionType').value;
+  }
+
+  addOption(i: number) {
+    console.log("i now: " + i);
+    this.getOptions(i).push(this.fb.control(''));
+  }
+
+  addQuestion() {
+    this.questions.push(
+      this.fb.group({
+      question: ['Enter your question here'],
+      questionType: [''],
+      options: this.fb.array([
+        this.fb.control('')
+      ])
+    })
+    );
+  }
 
 }

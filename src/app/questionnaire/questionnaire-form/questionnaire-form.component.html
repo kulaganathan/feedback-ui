@@ -2,36 +2,82 @@
 
 <div id="questionnaire-form" class="container">
     <div class="row">
-    <div class="col-md-12"><h3>Design your feedback form here!</h3></div>
+        <div class="col-md-12">
+            <h3>Design your dynamic feedback form here!</h3>
+        </div>
     </div>
     <div class="row">
-    <form #questionnaireForm="ngForm">
-        <div class="form-row">
-            <div class="form-group col-md-6">
-                <label for="companyName">Company Name</label>
-                <input type="text" size="30" maxlength="30" class="form-control" id="companyName" name="companyName"
-                    [(ngModel)]="model.companyName" required>
-            </div>
-            <div class="form-group col-md-3">
-                <label for="interviewDate">Interview Date </label>
-                <input type="date" size="15" maxlength="15" class="form-control input-group-date" id="interviewDate" name="interviewDate"
-                    required>
-            </div>
+        <div class="col-md-12">
+            <form [formGroup]="questionnaireForm" (ngSubmit)="onSubmit()">
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="companyName">Company Name
+                            <input type="text" size="30" maxlength="30" class="form-control" id="companyName"
+                                name="companyName" formControlName="companyName" required>
+                        </label>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="interviewDate">Interview Date </label>
+                        <input type="date" size="15" maxlength="15" class="form-control input-group-date"
+                            id="interviewDate" name="interviewDate" formControlName="interviewDate" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="position">Position
+                            <input type="text" size="30" maxlength="30" class="form-control" id="position"
+                                name="position" formControlName="position" required>
+                        </label>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="isDefault">is Default?</label>
+                        <input type="checkbox" class="form-control" id="isDefault" formControlName="isDefault"
+                            name="isDefault" checked required>
+                    </div>
+                </div>
+                <div class="form-row" formArrayName="questions" *ngFor="let question of questions.controls; let i=index">
+                    <div class="row" formGroupName="{{i}}">
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label for="question">Question</label>
+                                <textarea class="form-control" formControlName="question"></textarea>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="questionType">Type</label>
+                                <select class="form-control" formControlName="questionType">
+                                    <option selected>Select question type.</option>
+                                    <option *ngFor="let type of questionTypes" value={{type}}>{{type}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row" *ngIf="getQuestionType(i)==='Drop Down' || getQuestionType(i)==='Radio Button'">
+                            <div class="form-group col-md-12">Answer options:</div>
+                            <div class="form-group col-md-12" formArrayName="options">
+                                <div class="form-group col-md-3" *ngFor="let option of getOptions(i).controls; let j=index">
+                                    {{j+1}}: <input class="form-group" type="text" [formControlName]="j" required>
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <br/>
+                                    <button type="button" class="btn btn-success" (click)="addOption(i)">Add</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> 
+                <div class="form-row form-group col-md-3">
+                    <br/>
+                    <button type="button" class="btn btn-success" (click)="addQuestion()">Add New Question</button>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label>{{this.questionnaireForm.value}}</label>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <button type="submit" [disabled]="!questionnaireForm.valid"
+                            class="btn btn-success">Submit</button>
+                    </div>
+                </div>
+            </form>
         </div>
-        <div class="form-row">
-            <div class="form-group col-md-6">
-                <label for="position">Position</label>
-                <input type="text" size="15" maxlength="15" class="form-control" id="position" name="position">
-            </div>
-            <div class="form-group col-md-2">
-                <label for="isDefault">is Default?</label>
-                <input type="checkbox" class="form-control" id="isDefault" name="isDefault" checked required>
-            </div>
-            <div class="form-group col-md-2">
-                <div><br/></div>
-                <button type="submit" class="btn btn-success">Create</button>
-            </div>
-        </div>
-    </form>
     </div>
 </div>
