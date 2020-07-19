@@ -10,61 +10,61 @@ import { Questionnaire } from '../questionnaire';
 })
 export class QuestionnaireFormComponent {
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder) { }
 
-  questionTypes: any = ['Text Box', 'Text Area', 'Drop Down', 'Radio Button']
+  questionTypes: string[] = ['Text Box', 'Text Area', 'Drop Down', 'Radio Button'];
 
-  get diagnostic() { return JSON.stringify(this.questionnaireForm.value); }
-
-  onSubmit() {
-    alert("Form submitted.");
-  }
-
-  questionnaireForm = this.fb.group({
+  questionnaireForm = this.formBuilder.group({
     companyName: ['Enter company name here!', Validators.required],
     interviewDate: [''],
     position: ['Enter the position you applied for.'],
     isDefault: [true],
-    questions: this.fb.array([
-      this.fb.group({
+    questions: this.formBuilder.array([
+      this.formBuilder.group({
         question: ['Enter your question here'],
         questionType: [''],
-        options: this.fb.array([
-          this.fb.control('')
+        options: this.formBuilder.array([
+          this.formBuilder.control('')
         ])
       })
     ])
   });
 
+  onSubmit() {
+    alert('Form submitted.');
+  }
+
+  get diagnostic() { return JSON.stringify(this.questionnaireForm.value); }
+
   get questions() {
-    console.log("Questions: ", this.questionnaireForm.get('questions'));
+    console.log('Questions: ', this.questionnaireForm.get('questions'));
     return this.questionnaireForm.get('questions') as FormArray;
   }
 
   getOptions(i: number) {
-    let fa: FormArray = this.questionnaireForm.get('questions') as FormArray;
+    const fa: FormArray = this.questionnaireForm.get('questions') as FormArray;
     return fa.at(i).get('options') as FormArray;
   }
 
   getQuestionType(i: number) {
-    let fa: FormArray = this.questionnaireForm.get('questions') as FormArray;
+    const fa: FormArray = this.questionnaireForm.get('questions') as FormArray;
     return fa.at(i).get('questionType').value;
   }
 
   addOption(i: number) {
-    console.log("i now: " + i);
-    this.getOptions(i).push(this.fb.control(''));
+    console.log('i now: ' + i);
+    this.getOptions(i).push(this.formBuilder.control(''));
   }
 
-  addQuestion() {
+  addQuestion(): void {
     this.questions.push(
-      this.fb.group({
-      question: ['Enter your question here'],
-      questionType: [''],
-      options: this.fb.array([
-        this.fb.control('')
-      ])
-    })
+      this.formBuilder.group({
+        question: ['Enter your question here'],
+        questionType: [''],
+        options: this.formBuilder.array([
+          this.formBuilder.control('')
+        ])
+      })
     );
   }
 
