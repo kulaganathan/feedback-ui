@@ -7,11 +7,13 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { QuestionnaireFormComponent } from './questionnaire/questionnaire-form/questionnaire-form.component';
+import { QuestionsComponent } from './questionnaire/questions/questions.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    QuestionnaireFormComponent
+    QuestionnaireFormComponent,
+    QuestionsComponent
   ],
   imports: [
     BrowserModule,
